@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GemmaFC Recording</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/static/record.css" />
+  </head>
+  <body>
+    <main class="record-stage" aria-label="GemmaFC recording stage">
+      <section class="game-pane" aria-label="Google Research Football 720p frame">
+        <img id="recordFrame" alt="Google Research Football game frame" />
+        <div class="loading" id="loadingState">Preparing 720p recording mode</div>
+      </section>
+      <aside class="telemetry-pane" aria-label="GemmaFC telemetry">
+        <header>
+          <div class="mark">GFC</div>
+          <div>
+            <h1>GemmaFC</h1>
+            <p id="recordMeta">720p recording cockpit</p>
+          </div>
+        </header>
+
+        <div class="controls">
+          <button id="recordRun" type="button">Run</button>
+          <button id="recordStep" type="button">Step</button>
+          <button id="recordReset" type="button">Reset</button>
+        </div>
+
+        <div class="metric-stack">
+          <div>
+            <span>Step</span>
+            <strong id="recordStepCount">0</strong>
+          </div>
+          <div>
+            <span>Latency</span>
+            <strong id="recordLatency">0 ms</strong>
+          </div>
+          <div>
+            <span>Frame</span>
+            <strong id="recordFrameSize">960x720</strong>
+          </div>
+          <div>
+            <span>Repairs</span>
+            <strong id="recordRepairs">0</strong>
+          </div>
+        </div>
+
+        <section class="action-box">
+          <span>Current action</span>
+          <h2 id="recordAction">Waiting</h2>
+          <p id="recordIntent">Recording mode loads a 960x720 game frame.</p>
+        </section>
+
+        <section class="trace-box" id="recordTrace"></section>
+      </aside>
+    </main>
+    <script src="/static/record.js"></script>
+  </body>
+</html>

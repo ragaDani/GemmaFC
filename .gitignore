@@ -1,0 +1,16 @@
+# Local dependency checkouts and generated build outputs
+external/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+
+# OS/editor
+.DS_Store
+.playwright-cli/
+output/playwright/
+
+# Private local prep notes
+.local/

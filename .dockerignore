@@ -1,0 +1,9 @@
+.git
+external
+__pycache__
+*.pyc
+*.pyo
+.DS_Store
+Gemma 4 Hackathon.docx
+.env
+**/.env

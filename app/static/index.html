@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GemmaFC</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/static/styles.css?v=runtime-footer-v2-20260629" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <div class="brand-mark">GFC</div>
+          <div>
+            <h1>GemmaFC</h1>
+            <p>Real-time football control loop</p>
+          </div>
+        </div>
+        <div class="status-strip" id="connectionStatus">Booting app</div>
+      </header>
+
+      <main class="workspace">
+        <section class="field-panel" aria-label="Football environment">
+          <div class="field-toolbar">
+            <div class="field-config-stack">
+              <div class="config-row" aria-label="Scenario configuration">
+                <label class="select-block">
+                  <span>Scenario</span>
+                  <select id="scenarioSelect" aria-label="Scenario"></select>
+                </label>
+                <label class="select-block compact">
+                  <span>Opponent</span>
+                  <select id="opponentSelect" aria-label="Opponent"></select>
+                </label>
+              </div>
+            </div>
+            <div class="quality-row" aria-label="Render quality">
+              <button class="quality-button active" data-render-mode="live" type="button">Live</button>
+              <button class="quality-button" data-render-mode="recording" type="button">720p</button>
+            </div>
+          </div>
+
+          <div class="frame-stage">
+            <img id="gameFrame" alt="Google Research Football frame" />
+            <div class="frame-placeholder" id="framePlaceholder">
+              <strong>Environment ready</strong>
+              <span>Reset or run the control loop to load the first frame.</span>
+            </div>
+          </div>
+
+          <div class="ticker-row" aria-label="Simulation metrics">
+            <div>
+              <span>Step</span>
+              <strong id="stepCount">0</strong>
+            </div>
+            <div>
+              <span>Reward</span>
+              <strong id="rewardValue">0.00</strong>
+            </div>
+            <div>
+              <span>Latency</span>
+              <strong id="latencyValue">0 ms</strong>
+            </div>
+            <div>
+              <span>Repairs</span>
+              <strong id="repairCount">0</strong>
+            </div>
+          </div>
+          <section class="field-runtime" aria-label="Runtime">
+            <div class="section-label">Runtime</div>
+            <div class="metric-grid">
+              <div>
+                <span>Policy</span>
+                <strong id="policyProvider">Local scout</strong>
+              </div>
+              <div>
+                <span>Mode</span>
+                <strong id="policyMode">Proof loop</strong>
+              </div>
+              <div>
+                <span>Frame mean</span>
+                <strong id="frameMean">0</strong>
+              </div>
+              <div>
+                <span>Uptime</span>
+                <strong id="uptimeValue">0s</strong>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <aside class="side-panel" aria-label="Agent telemetry">
+          <section class="panel-section command-section">
+            <div class="section-label">Controller</div>
+            <div class="agent-switch" id="agentSwitch" aria-label="Controller selection">
+              <button class="agent-button active" data-controller="cerebras" type="button">
+                <strong>Cerebras</strong>
+                <span>Fast Gemma loop</span>
+              </button>
+              <button class="agent-button" data-controller="gpu" type="button">
+                <strong>GPU</strong>
+                <span>Comparison loop</span>
+              </button>
+            </div>
+            <div class="mode-switch" id="controlModeSwitch" aria-label="Player control mode">
+              <button class="mode-button active" data-control-mode="single" type="button">
+                <strong>Single</strong>
+                <span>One yellow</span>
+              </button>
+              <button class="mode-button" data-control-mode="squad" type="button">
+                <strong>Squad</strong>
+                <span>Coordinated play</span>
+              </button>
+            </div>
+            <div class="command-row" aria-label="Run controls">
+              <button class="control-button primary" id="runButton" type="button" title="Run selected controller">
+                <span class="icon icon-run" aria-hidden="true"></span>
+                <span>Run Cerebras</span>
+              </button>
+              <button class="control-button" id="stepButton" type="button" title="Step selected controller once">
+                <span class="icon icon-step" aria-hidden="true"></span>
+                <span>Tick</span>
+              </button>
+              <button class="control-button" id="resetButton" type="button" title="Reset scenario">
+                <span class="icon icon-reset" aria-hidden="true"></span>
+                <span>Reset</span>
+              </button>
+            </div>
+            <div class="controller-readout">
+              <div>
+                <span>Active</span>
+                <strong id="controllerName">Cerebras</strong>
+              </div>
+              <div>
+                <span>Decision</span>
+                <strong id="decisionLatency">--</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel-section action-section">
+            <div class="section-label">Current action</div>
+            <h2 id="actionName">Waiting</h2>
+            <p id="actionIntent">The environment has not stepped yet.</p>
+            <div class="action-feedback">
+              <div class="score-row">
+                <span>Evaluator score</span>
+                <strong id="scoreValue">0.00</strong>
+              </div>
+              <div class="repair-banner" id="repairBanner">No repair applied.</div>
+            </div>
+            <div class="action-trace">
+              <div class="section-label">Loop trace</div>
+              <div class="loop-list" id="loopList"></div>
+            </div>
+          </section>
+
+          <section class="panel-section provider-section">
+            <div class="provider-heading">
+              <div>
+                <div class="section-label">Provider race</div>
+                <h2>Gemma inference</h2>
+              </div>
+              <div class="provider-heading-actions">
+                <div class="speed-pill" id="providerSpeedup">Race ready</div>
+                <button class="provider-button" id="compareProvidersButton" type="button">Compare</button>
+              </div>
+            </div>
+            <div class="provider-grid" id="providerGrid">
+              <div class="provider-card" data-provider-card="cerebras">
+                <div class="provider-card-top">
+                  <strong>Cerebras</strong>
+                  <span class="provider-status">Idle</span>
+                </div>
+                <div class="provider-metrics">
+                  <div><span>Visible</span><strong data-provider-total>--</strong></div>
+                  <div><span>First token</span><strong data-provider-first>--</strong></div>
+                </div>
+                <p data-provider-action>Waiting for comparison.</p>
+              </div>
+              <div class="provider-card" data-provider-card="gpu">
+                <div class="provider-card-top">
+                  <strong>GPU</strong>
+                  <span class="provider-status">Idle</span>
+                </div>
+                <div class="provider-metrics">
+                  <div><span>Visible</span><strong data-provider-total>--</strong></div>
+                  <div><span>First token</span><strong data-provider-first>--</strong></div>
+                </div>
+                <p data-provider-action>Waiting for comparison.</p>
+              </div>
+            </div>
+          </section>
+        </aside>
+      </main>
+    </div>
+    <script src="/static/app.js?v=provider-race-speedup-20260629"></script>
+  </body>
+</html>

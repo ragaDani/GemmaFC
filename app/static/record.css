@@ -1,0 +1,221 @@
+:root {
+  color-scheme: dark;
+  --bg: #050706;
+  --panel: #111715;
+  --panel-2: #19211e;
+  --line: #30413a;
+  --text: #f4f8f1;
+  --muted: #a8b6ad;
+  --green: #2fa56e;
+  --amber: #e2bd5a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: 0;
+  display: grid;
+  place-items: center;
+}
+
+button {
+  font: inherit;
+}
+
+.record-stage {
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: min(100vh, calc(100vw * 9 / 16));
+  aspect-ratio: 16 / 9;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  background: #090d0b;
+}
+
+.game-pane {
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  background: #060807;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+#recordFrame {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: none;
+}
+
+.loading {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 8px;
+  padding: 14px 16px;
+  color: var(--muted);
+}
+
+.telemetry-pane {
+  min-width: 0;
+  min-height: 0;
+  border-left: 1px solid var(--line);
+  background: var(--panel);
+  padding: 16px;
+  display: grid;
+  grid-template-rows: auto auto auto auto 1fr;
+  gap: 12px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #153c2c;
+  border: 1px solid #3d554b;
+  color: #d9ffe9;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 22px;
+  line-height: 1;
+}
+
+header p,
+.metric-stack span,
+.action-box span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 7px;
+}
+
+.controls button {
+  min-height: 34px;
+  border: 1px solid #3a4a44;
+  background: var(--panel-2);
+  color: var(--text);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.controls button.primary {
+  background: var(--green);
+  color: #071a11;
+  border-color: var(--green);
+  font-weight: 800;
+}
+
+.metric-stack {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.metric-stack > div,
+.action-box,
+.trace-item {
+  border: 1px solid var(--line);
+  background: #0d1210;
+  border-radius: 8px;
+}
+
+.metric-stack > div {
+  min-height: 68px;
+  padding: 10px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+}
+
+.metric-stack strong {
+  font-size: 19px;
+}
+
+.action-box {
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.action-box h2 {
+  font-size: 23px;
+  line-height: 1.1;
+}
+
+.action-box p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.trace-box {
+  min-height: 0;
+  display: grid;
+  gap: 7px;
+  align-content: start;
+  overflow: hidden;
+}
+
+.trace-item {
+  min-height: 48px;
+  padding: 9px;
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.trace-item strong {
+  font-size: 13px;
+}
+
+.trace-item span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.trace-item.done {
+  border-color: #315b46;
+}
+
+.trace-item.skipped {
+  border-color: #594927;
+}
+
+@media (max-aspect-ratio: 16 / 9) {
+  .record-stage {
+    width: 100vw;
+    height: calc(100vw * 9 / 16);
+  }
+}
